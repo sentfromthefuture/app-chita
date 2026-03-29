@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chita Lodge – Your Peaceful Oasis in Lusaka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #1B3022;
+      --terracotta: #C05746;
+      --gold: #D4AF37;
+      --cream: #FDFCF8;
+      --white: #fff;
+      --green60: rgba(27,48,34,0.6);
+      --green10: rgba(27,48,34,0.1);
+      --green5: rgba(27,48,34,0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--green);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,h2,h3,h4,h5,h6 { font-family: 'Playfair Display', serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      padding: 1.5rem 0;
+      transition: all .3s;
+    }
+    nav.scrolled {
+      background: rgba(253,252,248,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--green10);
+      padding: .75rem 0;
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { display: flex; align-items: center; gap: .5rem; }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: var(--green); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cream); font-family: 'Playfair Display',serif;
+      font-size: 1.25rem; font-weight: 700;
+    }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      font-size:.875rem; font-weight:500; text-decoration:none;
+      color: var(--green); transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--terracotta); }
+    .btn-book {
+      background: var(--terracotta); color: #fff;
+      padding: .625rem 1.5rem; border-radius: 9999px;
+      font-size:.875rem; font-weight:600; border:none; cursor:pointer;
+      box-shadow: 0 8px 24px rgba(192,87,70,.2);
+      transition: all .2s;
+    }
+    .btn-book:hover { opacity:.9; transform: scale(1.03); }
+    .btn-burger { display:none; background:none; border:none; cursor:pointer; color:var(--green); }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display:none; position:fixed; inset:0; background:var(--cream); z-index:60;
+      flex-direction:column; padding:2rem;
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu-close { align-self:flex-end; background:none;border:none;cursor:pointer;font-size:2rem; }
+    .mobile-menu nav-items { display:flex;flex-direction:column;gap:2rem;margin-top:3rem; }
+    .mobile-menu a {
+      font-family:'Playfair Display',serif; font-size:2rem;
+      text-decoration:none; color:var(--green);
+    }
+    .mobile-menu-links { display:flex; flex-direction:column; gap:2rem; margin-top:3rem; }
+    .mobile-menu-links a { font-family:'Playfair Display',serif; font-size:2rem; text-decoration:none; color:var(--green); }
+    .mobile-menu .btn-stay {
+      margin-top:auto; background:var(--terracotta); color:#fff;
+      padding:1rem; border-radius:12px; font-size:1.25rem; font-weight:600;
+      border:none; cursor:pointer; width:100%;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position:relative; min-height:700px; height:100vh;
+      display:flex; align-items:center; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0; z-index:0;
+      background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
+      transform: scale(1.08);
+      filter: brightness(.7);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom { to { transform:scale(1); } }
+    .hero-overlay {
+      position:absolute; inset:0; z-index:1;
+      background: linear-gradient(to right, rgba(27,48,34,.6), transparent);
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      max-width:1280px; margin:0 auto; padding:0 1.5rem; width:100%;
+    }
+    .hero-inner {
+      max-width:42rem; color:#fff;
+      opacity:0; transform:translateY(30px);
+      animation: fadeUp .9s .2s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .badge {
+      display:inline-block; padding:.375rem 1rem; border-radius:9999px;
+      background:rgba(253,252,248,.2); backdrop-filter:blur(8px);
+      font-size:.75rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+      margin-bottom:1.5rem;
+    }
+    .hero h1 { font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1; margin-bottom:1.5rem; }
+    .hero p { font-size:clamp(1rem,2vw,1.25rem); color:rgba(253,252,248,.9); margin-bottom:2.5rem; line-height:1.7; font-weight:300; }
+    .hero-btns { display:flex; flex-wrap:wrap; gap:1rem; }
+    .btn-primary {
+      background:var(--terracotta); color:#fff;
+      padding:1rem 2rem; border-radius:9999px; font-weight:700; font-size:1.125rem;
+      border:none; cursor:pointer; display:flex; align-items:center; gap:.5rem;
+      box-shadow:0 12px 32px rgba(192,87,70,.3);
+      transition:all .25s;
+    }
+    .btn-primary:hover { opacity:.9; transform:scale(1.04); }
+    .btn-ghost {
+      background:rgba(255,255,255,.12); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.2); color:#fff;
+      padding:1rem 2rem; border-radius:9999px; font-weight:700; font-size:1.125rem;
+      cursor:pointer; transition:all .25s;
+    }
+    .btn-ghost:hover { background:rgba(255,255,255,.22); }
+    .scroll-indicator {
+      position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+      color:rgba(255,255,255,.5); display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      font-size:.625rem; letter-spacing:.2em; text-transform:uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(10px)} }
+    .scroll-indicator .line { width:1px; height:48px; background:linear-gradient(to bottom, rgba(255,255,255,.5),transparent); }
+
+    /* ── REVIEWS ── */
+    .reviews { padding:6rem 0; background:#fff; }
+    .section-center { text-align:center; margin-bottom:4rem; }
+    .section-center h2 { font-size:2.5rem; margin-bottom:1rem; }
+    .stars { display:flex; justify-content:center; gap:.25rem; color:var(--gold); }
+    .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; }
+    .card {
+      padding:2rem; border-radius:1rem; background:var(--cream);
+      border:1px solid var(--green5); position:relative;
+      opacity:0; transform:translateY(20px); transition:all .5s;
+    }
+    .card.visible { opacity:1; transform:translateY(0); }
+    .card-quote { position:absolute; top:-1rem; left:2rem; font-family:'Playfair Display',serif; font-size:5rem; color:rgba(192,87,70,.18); line-height:1; }
+    .card p { font-size:1.1rem; font-style:italic; margin-bottom:1.5rem; color:rgba(27,48,34,.8); line-height:1.7; }
+    .card .author { font-weight:700; }
+    .card .role { font-size:.875rem; color:rgba(27,48,34,.6); }
+
+    /* ── SERVICES ── */
+    .services { padding:6rem 0; background:var(--cream); overflow:hidden; }
+    .section-row { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4rem; gap:1.5rem; flex-wrap:wrap; }
+    .section-tag { color:var(--terracotta); font-weight:700; letter-spacing:.15em; font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:1rem; }
+    .section-row h2 { font-size:clamp(2rem,4vw,3.25rem); max-width:32rem; }
+    .section-row p { color:rgba(27,48,34,.6); max-width:24rem; }
+    .bento { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+    @media(min-width:768px){
+      .bento { grid-template-columns:7fr 5fr; }
+      .bento-full { grid-column:1/-1; }
+    }
+    .bento-card {
+      position:relative; border-radius:1.5rem; overflow:hidden;
+      height:500px; box-shadow:0 20px 60px rgba(0,0,0,.15);
+      transition:transform .4s;
+    }
+    .bento-card:hover { transform:translateY(-5px); }
+    .bento-card-wide { height:350px; }
+    .bento-card img {
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      transition:transform .7s;
+    }
+    .bento-card:hover img { transform:scale(1.08); }
+    .bento-overlay-bottom {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(27,48,34,.9) 0%, rgba(27,48,34,.2) 50%, transparent 100%);
+    }
+    .bento-overlay-center {
+      position:absolute; inset:0; background:rgba(27,48,34,.4);
+      transition:background .3s;
+    }
+    .bento-card:hover .bento-overlay-center { background:rgba(27,48,34,.3); }
+    .bento-bottom-text { position:absolute; bottom:0; left:0; padding:2.5rem; color:#fff; }
+    .bento-tag { display:flex; align-items:center; gap:.5rem; font-size:.75rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; color:var(--gold); }
+    .bento-bottom-text h3 { font-size:2rem; margin-bottom:1rem; }
+    .bento-bottom-text p { color:rgba(255,255,255,.8); max-width:28rem; line-height:1.6; margin-bottom:1.5rem; }
+    .link-gold { display:flex; align-items:center; gap:.5rem; font-weight:700; color:var(--gold); background:none; border:none; cursor:pointer; font-size:1rem; transition:gap .2s; }
+    .link-gold:hover { gap:1rem; }
+    .bento-center-text {
+      position:absolute; inset:0; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center; padding:1.5rem;
+      color:#fff;
+    }
+    .bento-center-text h3 { font-size:2.5rem; margin-bottom:1rem; }
+    .bento-center-text p { font-size:1.1rem; color:rgba(255,255,255,.9); max-width:36rem; }
+
+    /* ── ABOUT ── */
+    .about { padding:6rem 0; background:#fff; overflow:hidden; }
+    .about-grid { display:grid; gap:4rem; align-items:center; }
+    @media(min-width:768px){ .about-grid { grid-template-columns:1fr 1fr; } }
+    .about-img-wrap { position:relative; }
+    .about-img {
+      aspect-ratio:1/1; border-radius:1rem; overflow:hidden;
+      box-shadow:0 32px 80px rgba(0,0,0,.2); position:relative; z-index:1;
+      opacity:0; transform:translateX(-30px); transition:all .7s;
+    }
+    .about-img.visible { opacity:1; transform:translateX(0); }
+    .about-img img { width:100%; height:100%; object-fit:cover; }
+    .about-deco1 { position:absolute; bottom:-2rem; right:-2rem; width:16rem; height:16rem; background:var(--terracotta); border-radius:1rem; z-index:0; }
+    .about-deco2 { position:absolute; top:-2rem; left:-2rem; width:8rem; height:8rem; border:2rem solid rgba(212,175,55,.2); border-radius:9999px; }
+    .about-text {
+      opacity:0; transform:translateX(30px); transition:all .7s .15s;
+    }
+    .about-text.visible { opacity:1; transform:translateX(0); }
+    .about-text h2 { font-size:clamp(2rem,4vw,3.25rem); margin-bottom:2rem; line-height:1.15; }
+    .about-text p { font-size:1.1rem; color:rgba(27,48,34,.7); margin-bottom:1.5rem; line-height:1.7; }
+    .stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:2.5rem; }
+    .stat-num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; color:var(--green); margin-bottom:.25rem; }
+    .stat-label { font-size:.75rem; text-transform:uppercase; letter-spacing:.15em; font-weight:700; color:rgba(27,48,34,.5); }
+
+    /* ── WHY ── */
+    .why { padding:6rem 0; background:var(--green); color:var(--cream); }
+    .why .section-center h2 { color:var(--cream); }
+    .why .section-center p { color:rgba(253,252,248,.7); font-size:1.1rem; max-width:48rem; margin:0 auto; }
+    .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:3rem; margin-top:5rem; }
+    .why-item { display:flex; flex-direction:column; align-items:center; text-align:center; opacity:0; transform:translateY(20px); transition:all .5s; }
+    .why-item.visible { opacity:1; transform:translateY(0); }
+    .why-icon {
+      width:80px; height:80px; border-radius:9999px;
+      background:rgba(253,252,248,.1); border:1px solid rgba(253,252,248,.2);
+      display:flex; align-items:center; justify-content:center; margin-bottom:2rem;
+    }
+    .why-icon svg { color:var(--gold); width:32px; height:32px; }
+    .why-item h3 { font-size:1.5rem; margin-bottom:1rem; }
+    .why-item p { color:rgba(253,252,248,.6); line-height:1.7; }
+
+    /* ── CTA ── */
+    .cta-section { padding:6rem 0; background:var(--cream); }
+    .cta-box {
+      max-width:1024px; margin:0 auto;
+      background:var(--green); border-radius:3rem; padding:5rem;
+      text-align:center; color:var(--cream); position:relative; overflow:hidden;
+      box-shadow:0 40px 100px rgba(27,48,34,.3);
+      opacity:0; transform:scale(.96); transition:all .6s;
+    }
+    .cta-box.visible { opacity:1; transform:scale(1); }
+    .cta-blob1 { position:absolute; top:0; right:0; width:16rem; height:16rem; background:rgba(212,175,55,.1); border-radius:9999px; transform:translate(50%,-50%); filter:blur(60px); }
+    .cta-blob2 { position:absolute; bottom:0; left:0; width:16rem; height:16rem; background:rgba(192,87,70,.1); border-radius:9999px; transform:translate(-50%,50%); filter:blur(60px); }
+    .cta-box h2 { font-size:clamp(2rem,4vw,3.5rem); margin-bottom:2rem; position:relative; z-index:1; }
+    .cta-box p { font-size:1.25rem; color:rgba(253,252,248,.7); margin-bottom:3rem; max-width:36rem; margin-left:auto; margin-right:auto; position:relative; z-index:1; }
+    .cta-btns { display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; position:relative; z-index:1; }
+    .cta-btns .btn-primary { font-size:1.25rem; padding:1.25rem 2.5rem; }
+    .cta-btns .btn-ghost { font-size:1.25rem; padding:1.25rem 2.5rem; }
+
+    /* ── FOOTER ── */
+    footer { background:#fff; padding-top:6rem; padding-bottom:3rem; border-top:1px solid var(--green5); }
+    .footer-grid { display:grid; gap:4rem; margin-bottom:5rem; }
+    @media(min-width:768px){ .footer-grid { grid-template-columns:5fr 3fr 4fr; } }
+    footer p.tagline { color:rgba(27,48,34,.6); font-size:1.1rem; margin:2rem 0; line-height:1.7; max-width:28rem; }
+    .socials { display:flex; gap:1rem; }
+    .social-btn {
+      width:40px; height:40px; border-radius:9999px; background:var(--cream);
+      display:flex; align-items:center; justify-content:center; color:var(--green);
+      text-decoration:none; transition:all .2s;
+    }
+    .social-btn:hover { background:var(--green); color:#fff; }
+    .social-btn svg { width:20px; height:20px; }
+    .footer-col h4 { font-size:.75rem; text-transform:uppercase; letter-spacing:.15em; font-weight:700; margin-bottom:2rem; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+    .footer-col a { color:rgba(27,48,34,.7); text-decoration:none; transition:color .2s; }
+    .footer-col a:hover { color:var(--terracotta); }
+    .contact-row { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; }
+    .contact-row svg { color:var(--terracotta); flex-shrink:0; width:24px; height:24px; }
+    .contact-row p { color:rgba(27,48,34,.7); }
+    .footer-bottom {
+      padding-top:3rem; border-top:1px solid var(--green5);
+      display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem;
+      font-size:.875rem; color:rgba(27,48,34,.4);
+    }
+    .footer-bottom-links { display:flex; gap:2rem; }
+    .footer-bottom-links a { color:rgba(27,48,34,.4); text-decoration:none; transition:color .2s; }
+    .footer-bottom-links a:hover { color:var(--green); }
+
+    /* Container */
+    .container { max-width:1280px; margin:0 auto; padding:0 1.5rem; }
+
+    /* Responsive */
+    @media(max-width:767px){
+      .nav-links { display:none; }
+      .btn-burger { display:block; }
+      .section-row { flex-direction:column; }
+      .bento-card { height:360px; }
+      .cta-box { padding:3rem 1.5rem; border-radius:2rem; }
+      .hero-btns { flex-direction:column; }
+      .hero-btns button { width:100%; justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">C</div>
+      <span class="logo-text">Chita Lodge</span>
+    </div>
+    <div class="nav-links">
+      <a href="#rooms">Rooms</a>
+      <a href="#dining">Dining</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button class="btn-book">Book Now</button>
+    </div>
+    <button class="btn-burger" onclick="document.getElementById('mobileMenu').classList.add('open')">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
+  <div class="mobile-menu-links">
+    <a href="#rooms" onclick="document.getElementById('mobileMenu').classList.remove('open')">Rooms</a>
+    <a href="#dining" onclick="document.getElementById('mobileMenu').classList.remove('open')">Dining</a>
+    <a href="#about" onclick="document.getElementById('mobileMenu').classList.remove('open')">About</a>
+    <a href="#contact" onclick="document.getElementById('mobileMenu').classList.remove('open')">Contact</a>
+  </div>
+  <button class="btn-stay">Book Your Stay</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <span class="badge">Boutique Hospitality in Lusaka</span>
+      <h1>Your Peaceful Oasis in the Heart of Lusaka.</h1>
+      <p>Nestled in the leafy, quiet neighborhood of Olympia. Experience legendary local dining and true African hospitality, just steps away from the city's vibrant pulse.</p>
+      <div class="hero-btns">
+        <button class="btn-primary">Book Your Stay <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <button class="btn-ghost">Reserve a Table</button>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Explore</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-center">
+      <h2>What Our Guests Say</h2>
+      <div class="stars">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="transition-delay:.05s">
+        <div class="card-quote">"</div>
+        <p>True African hospitality. The staff made me feel like family from the moment I arrived.</p>
+        <div class="author">Sarah M.</div><div class="role">Business Traveler</div>
+      </div>
+      <div class="card" style="transition-delay:.15s">
+        <div class="card-quote">"</div>
+        <p>A hidden gem with the best steak in Lusaka. The garden bar is the perfect place to unwind.</p>
+        <div class="author">David K.</div><div class="role">Local Foodie</div>
+      </div>
+      <div class="card" style="transition-delay:.25s">
+        <div class="card-quote">"</div>
+        <p>Perfect balance of business convenience and a relaxing atmosphere. Walking distance to Manda Hill is a huge plus.</p>
+        <div class="author">Elena R.</div><div class="role">International Consultant</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="rooms">
+  <div class="container">
+    <div class="section-row">
+      <div>
+        <span class="section-tag">Our Offerings</span>
+        <h2>Refined Comfort, Authentic Flavors.</h2>
+      </div>
+      <p>Every detail at Chita Lodge is crafted to provide an intimate, boutique experience that celebrates Zambian warmth.</p>
+    </div>
+    <div class="bento">
+      <div class="bento-card">
+        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1974" alt="Luxury Room" referrerpolicy="no-referrer">
+        <div class="bento-overlay-bottom"></div>
+        <div class="bento-bottom-text">
+          <div class="bento-tag">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Accommodation
+          </div>
+          <h3>Spacious Comfort</h3>
+          <p>Retreat to large, comfortable rooms featuring private patios and oversized bathtubs. Our dedicated rest zones ensure a peaceful night's sleep.</p>
+          <button class="link-gold">View Rooms <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+      <div class="bento-card" id="dining">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=2069" alt="Gourmet Dining" referrerpolicy="no-referrer">
+        <div class="bento-overlay-bottom"></div>
+        <div class="bento-bottom-text">
+          <div class="bento-tag">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><path d="M7 2v20"/><path d="M21 15V2s-5 2-5 8v5a2 2 0 002 2h4a2 2 0 002-2z"/></svg>
+            Restaurant & Bar
+          </div>
+          <h3>Authentic Culinary Excellence</h3>
+          <p>Famed for our steaks, pork chops, and hand-cut fries. Enjoy fresh, local ingredients in our lush outdoor garden bar.</p>
+          <button class="link-gold">Explore Menu <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+      <div class="bento-card bento-card-wide bento-full">
+        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2070" alt="Lusaka City" referrerpolicy="no-referrer">
+        <div class="bento-overlay-center"></div>
+        <div class="bento-center-text">
+          <svg style="color:var(--gold);margin-bottom:1rem" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h3>Unmatched City Access</h3>
+          <p>Located in the leafy Olympia neighborhood, we are just a short, pleasant walk to Manda Hill Mall and minutes from the central business district.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <div class="about-img">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=2070" alt="Chita Lodge Garden" referrerpolicy="no-referrer">
+        </div>
+        <div class="about-deco1"></div>
+        <div class="about-deco2"></div>
+      </div>
+      <div class="about-text">
+        <span class="section-tag">Our Story</span>
+        <h2>Zambian Warmth Meets Modern Convenience.</h2>
+        <p>Chita Lodge is more than just a place to stay; it's a hidden gem designed to be your relaxing oasis in the city. We've created a space that caters equally to the busy professional needing a quiet night and the traveler looking to soak up authentic local culture.</p>
+        <p>From our lush, vibrant outdoor garden bar to our peaceful, dedicated rest zones, we offer a unique blend of mature entertainment and serene privacy. Experience "True African Hospitality" in an intimate, boutique setting that values exclusivity and personal care.</p>
+        <div class="stats">
+          <div>
+            <div class="stat-num">15+</div>
+            <div class="stat-label">Years of Excellence</div>
+          </div>
+          <div>
+            <div class="stat-num">10k+</div>
+            <div class="stat-label">Happy Guests</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="container">
+    <div class="section-center">
+      <h2>Why Chita Lodge?</h2>
+      <p>We offer an intimate scale that ensures exclusivity and a level of attention you won't find in larger hotels.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item" style="transition-delay:.05s">
+        <div class="why-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Prime Location</h3>
+        <p>Walk to Manda Hill Mall and major business hubs within minutes from our quiet Olympia base.</p>
+      </div>
+      <div class="why-item" style="transition-delay:.15s">
+        <div class="why-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><path d="M7 2v20"/><path d="M21 15V2s-5 2-5 8v5a2 2 0 002 2h4a2 2 0 002-2z"/></svg>
+        </div>
+        <h3>Legendary Dining</h3>
+        <p>Savor the best steaks and authentic Zambian cuisine in Lusaka, prepared with fresh local ingredients.</p>
+      </div>
+      <div class="why-item" style="transition-delay:.25s">
+        <div class="why-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Authentic Hospitality</h3>
+        <p>Experience the genuine warmth and personalized service that only a boutique lodge can provide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-blob1"></div>
+      <div class="cta-blob2"></div>
+      <h2>Ready to Experience True African Hospitality?</h2>
+      <p>Whether it's for business or leisure, Chita Lodge offers the perfect balance of city access and peaceful relaxation.</p>
+      <div class="cta-btns">
+        <button class="btn-primary">Book Your Stay Now</button>
+        <button class="btn-ghost">Contact Our Team</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo">
+          <div class="logo-icon">C</div>
+          <span class="logo-text">Chita Lodge</span>
+        </div>
+        <p class="tagline">Your peaceful oasis in the heart of Lusaka. Experience true African hospitality and legendary dining in the leafy neighborhood of Olympia.</p>
+        <div class="socials">
+          <a href="#" class="social-btn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-btn">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#rooms">Our Rooms</a></li>
+          <li><a href="#dining">Dining & Bar</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <div class="contact-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p>Olympia Park, Lusaka, Zambia<br>Walking distance to Manda Hill Mall</p>
+        </div>
+        <div class="contact-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.1a16 16 0 006 6l.56-.56a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          <p>+260 211 290 000</p>
+        </div>
+        <div class="contact-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <p>reservations@chitalodge.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Chita Lodge & Restaurant. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Intersection observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.card, .why-item, .about-img, .about-text, .cta-box').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
